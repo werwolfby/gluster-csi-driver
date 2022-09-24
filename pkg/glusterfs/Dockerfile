@@ -12,30 +12,27 @@
 
 #-- Create build environment
 
-FROM docker.io/openshift/origin-release:golang-1.11 as build
+FROM golang:1.19.1 as build
 
 ENV GOPATH="/go/" \
     SRCDIR="/go/src/github.com/gluster/gluster-csi-driver/" \
     SCRIPTSDIR="${SRCDIR}scripts/"
 
-RUN yum install -y \
-    git
-
 # Install go tools
-ARG GO_DEP_VERSION=
 ARG GO_METALINTER_VERSION=latest
 COPY scripts/install-go-tools.sh "${SCRIPTSDIR}"
 RUN mkdir -p /go/bin; ${SCRIPTSDIR}/install-go-tools.sh
-
-# Vendor dependencies
-COPY Gopkg.lock Gopkg.toml "${SRCDIR}"
-WORKDIR "${SRCDIR}"
-RUN /go/bin/dep ensure -v -vendor-only
 
 # Copy source directories
 COPY cmd/ "${SRCDIR}/cmd"
 COPY pkg/ "${SRCDIR}/pkg"
 COPY scripts/ "${SCRIPTSDIR}"
+
+# Vendor dependencies
+COPY go.mod go.sum "${SRCDIR}"
+WORKDIR "${SRCDIR}"
+RUN go mod tidy
+RUN go mod vendor
 
 #-- Test phase
 
@@ -61,7 +58,6 @@ RUN ldd /build/glusterfs-csi-driver | grep -q "not a dynamic executable"
 FROM docker.io/centos:7 as final
 
 # Install dependencies
-ADD http://artifacts.ci.centos.org/gluster/nightly/release-6.repo  /etc/yum.repos.d/glusterfs-nightly.repo
 RUN yum update -y && \
     yum -y install glusterfs-fuse && \
     yum clean all -y && \
