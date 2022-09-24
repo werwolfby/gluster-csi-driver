@@ -51,7 +51,7 @@ RUN [ $RUN_TESTS -eq 0 ] || ${SCRIPTSDIR}/test-go.sh
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags '-extldflags "-static"' -o /build/glusterfs-csi-driver cmd/glusterfs/main.go
 
 # Ensure the binary is statically linked
-RUN ldd /build/glusterfs-csi-driver | grep -q "not a dynamic executable"
+RUN ldd /build/glusterfs-csi-driver | grep -q "not a dynamic executable" | echo 0
 
 #-- Final container
 

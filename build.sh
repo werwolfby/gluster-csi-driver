@@ -3,7 +3,7 @@
 set -e -o pipefail
 
 # Set which docker repo to use
-REPO="${REPO:-gluster}"
+REPO="${REPO:-werwolfby}"
 
 # Allow overriding default docker command
 RUNTIME_CMD=${RUNTIME_CMD:-docker}
@@ -94,7 +94,7 @@ $RUNTIME_CMD version
 $RUNTIME_CMD $build \
 	-t "${REPO}/${DRIVER}" \
 	"${build_args[@]}" \
-	--network host \
+	${EXTRA_RUNTIME_CMD_ARGS} \
 	-f "$DOCKERFILE" \
 	. ||
 	exit 1
