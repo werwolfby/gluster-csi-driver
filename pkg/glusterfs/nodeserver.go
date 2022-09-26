@@ -18,7 +18,7 @@ import (
 // NodeServer struct of Glusterfs CSI driver with supported methods of CSI node
 // server spec.
 type NodeServer struct {
-	*GfDriver
+	NodeID string
 }
 
 var glusterMounter = mount.New("")
@@ -165,7 +165,7 @@ func (ns *NodeServer) NodeUnpublishVolume(ctx context.Context, req *csi.NodeUnpu
 // NodeGetInfo returns NodeGetInfoResponse for CO.
 func (ns *NodeServer) NodeGetInfo(ctx context.Context, req *csi.NodeGetInfoRequest) (*csi.NodeGetInfoResponse, error) {
 	return &csi.NodeGetInfoResponse{
-		NodeId: ns.GfDriver.NodeID,
+		NodeId: ns.NodeID,
 	}, nil
 }
 

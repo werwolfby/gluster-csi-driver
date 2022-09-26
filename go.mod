@@ -6,7 +6,6 @@ require (
 	github.com/container-storage-interface/spec v1.0.0
 	github.com/gluster/glusterd2 v5.0.0-rc0.0.20190228134612-994aaa048955+incompatible
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/golang/protobuf v1.2.0
 	github.com/kubernetes-csi/csi-lib-utils v0.2.0
 	github.com/kubernetes-csi/csi-test v1.1.0
 	github.com/kubernetes-csi/drivers v1.0.1
@@ -25,6 +24,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7 // indirect
 	github.com/gogo/protobuf v1.2.0 // indirect
 	github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff // indirect
+	github.com/golang/protobuf v1.2.0 // indirect
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf // indirect
 	github.com/google/uuid v1.1.0 // indirect

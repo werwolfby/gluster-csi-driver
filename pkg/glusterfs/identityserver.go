@@ -10,7 +10,6 @@ import (
 // IdentityServer struct of Glusterfs CSI driver with supported methods of CSI
 // identity server spec.
 type IdentityServer struct {
-	*GfDriver
 }
 
 // GetPluginInfo returns metadata of the plugin
