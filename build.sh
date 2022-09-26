@@ -3,12 +3,11 @@
 set -e -o pipefail
 
 # Set which docker repo to use
-REPO="${REPO:-gluster}"
+REPO="${REPO:-werwolfby}"
 
 # Allow overriding default docker command
 RUNTIME_CMD=${RUNTIME_CMD:-docker}
 
-GO_DEP_VERSION="${GO_DEP_VERSION}"
 GO_METALINTER_VERSION="${GO_METALINTER_VERSION:-v3.0.0}"
 GO_METALINTER_THREADS=${GO_METALINTER_THREADS:-4}
 
@@ -82,7 +81,6 @@ BUILDDATE="$(date -u '+%Y-%m-%dT%H:%M:%S.%NZ')"
 
 build_args=()
 build_args+=(--build-arg "RUN_TESTS=$RUN_TESTS")
-build_args+=(--build-arg "GO_DEP_VERSION=$GO_DEP_VERSION")
 build_args+=(--build-arg "GO_METALINTER_VERSION=$GO_METALINTER_VERSION")
 build_args+=(--build-arg "GO_METALINTER_THREADS=$GO_METALINTER_THREADS")
 build_args+=(--build-arg "version=$VERSION")
@@ -96,7 +94,7 @@ $RUNTIME_CMD version
 $RUNTIME_CMD $build \
 	-t "${REPO}/${DRIVER}" \
 	"${build_args[@]}" \
-	--network host \
+	${EXTRA_RUNTIME_CMD_ARGS} \
 	-f "$DOCKERFILE" \
 	. ||
 	exit 1
