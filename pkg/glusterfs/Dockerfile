@@ -55,14 +55,10 @@ RUN ldd /build/glusterfs-csi-driver | grep -q "not a dynamic executable" | echo 
 
 #-- Final container
 
-FROM docker.io/centos:7 as final
+FROM docker.io/debian:bullseye-20221004-slim as final
 
 # Install dependencies
-RUN yum update -y && \
-    yum -y install glusterfs-fuse && \
-    yum clean all -y && \
-    rm -rf /var/cache/yum && \
-    rpm -qa | grep gluster | tee /gluster-rpm-versions.txt
+RUN apt update && apt install -y glusterfs-client
 
 # Copy glusterfs-csi-driver from build phase
 COPY --from=build /build /
