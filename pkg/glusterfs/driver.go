@@ -55,6 +55,6 @@ func NewIdentityServer() *IdentityServer {
 // GlusterFS CSI driver which can serve multiple parallel requests
 func (g *GfDriver) Run() {
 	srv := csicommon.NewNonBlockingGRPCServer()
-	srv.Start(g.Endpoint, NewIdentityServer(), NewControllerServer(), NewNodeServer(g.NodeID))
+	srv.Start(g.Endpoint, NewIdentityServer(), nil, NewNodeServer(g.NodeID))
 	srv.Wait()
 }
