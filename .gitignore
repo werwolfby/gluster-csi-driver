@@ -64,3 +64,4 @@ cscope.*
 
 # Godeps workspace
 /Godeps/_workspace
+/bin/
