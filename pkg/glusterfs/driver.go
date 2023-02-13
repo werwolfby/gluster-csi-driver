@@ -34,11 +34,6 @@ func New(config *config.Config) *GfDriver {
 	return gfd
 }
 
-// NewControllerServer initialize a controller server for GlusterFS CSI driver.
-func NewControllerServer() *ControllerServer {
-	return &ControllerServer{}
-}
-
 // NewNodeServer initialize a node server for GlusterFS CSI driver.
 func NewNodeServer(nodeID string) *NodeServer {
 	return &NodeServer{
